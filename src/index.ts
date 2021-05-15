@@ -1,29 +1,8 @@
 import { createClient, RedisClient } from 'redis';
 import { promisify } from 'util';
-import { ILogger } from './logger';
+import { ILogger, ICache, SetAsyncMode, Config } from './defination';
 
 let retryConnectAttempt = 0;
-type SetAsyncMode = 'EX' | 'PX' | 'KEEPTTL';
-
-export interface ICache {
-  getAsync: (key: string) => Promise<string | null>;
-  setAsync: (
-    key: string,
-    value: string,
-    mode?: SetAsyncMode,
-    duration?: number
-  ) => Promise<unknown>;
-  delAsync: (key: string) => Promise<number>;
-  expireAsync: (key: string, second: number) => Promise<number>;
-  incrByAsync: (key: string, increment: number) => Promise<number>;
-  decrByAsync: (key: string, decrement: number) => Promise<number>;
-}
-
-export type Config = {
-  host?: string;
-  port?: number;
-  password?: string;
-};
 
 export class Redis implements ICache {
   client: RedisClient;
