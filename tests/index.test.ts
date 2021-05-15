@@ -2,7 +2,7 @@ import { describe, it } from 'mocha';
 import { expect } from 'chai';
 import { Redis } from '../src';
 
-const cache = new Redis({}, console);
+const cache = new Redis();
 
 const key = 'key';
 let value = `10`;

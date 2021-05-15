@@ -6,6 +6,8 @@ let retryConnectAttempt = 0;
 
 export class Redis implements ICache {
   client: RedisClient;
+  logger: ILogger;
+
   getAsync: (key: string) => Promise<string | null>;
 
   setAsync: (
@@ -19,13 +21,13 @@ export class Redis implements ICache {
   incrByAsync: (key: string, increment: number) => Promise<number>;
   decrByAsync: (key: string, decrement: number) => Promise<number>;
 
-  constructor({ host = '0.0.0.0', port = 6379, password = '' }: Config, private logger: ILogger) {
+  constructor(config?: Config, logger?: ILogger) {
     this.client = createClient({
-      host: host,
-      port: port,
-      password: password
+      host: config?.host || '0.0.0.0',
+      port: config?.port || 6379,
+      password: config?.password || ''
     });
-
+    this.logger = logger || console;
     this.listen();
 
     this.getAsync = promisify(this.client.get).bind(this.client);
