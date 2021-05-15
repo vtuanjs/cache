@@ -21,11 +21,11 @@ export class Redis implements ICache {
   incrByAsync: (key: string, increment: number) => Promise<number>;
   decrByAsync: (key: string, decrement: number) => Promise<number>;
 
-  constructor(config?: Config, logger?: ILogger) {
+  constructor({ host = '0.0.0.0', port = 6379, password = '' }: Config, logger?: ILogger) {
     this.client = createClient({
-      host: config?.host || '0.0.0.0',
-      port: config?.port || 6379,
-      password: config?.password || ''
+      host,
+      port,
+      password
     });
     this.logger = logger || console;
     this.listen();
