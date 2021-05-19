@@ -1,8 +1,8 @@
 import { describe, it } from 'mocha';
 import { expect } from 'chai';
-import { Redis } from '../src';
+import { RedisCache } from '../src';
 
-const cache = new Redis({});
+const cache = new RedisCache({});
 
 const key = 'key';
 let value = `10`;

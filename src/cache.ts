@@ -4,7 +4,7 @@ import { ILogger, ICache, SetAsyncMode, Config } from './definitions';
 
 let retryConnectAttempt = 0;
 
-export class Redis implements ICache {
+export class RedisCache implements ICache {
   client: RedisClient;
   logger: ILogger;
 
